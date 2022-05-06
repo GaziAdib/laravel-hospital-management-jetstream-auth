@@ -10,6 +10,12 @@ class HomeController extends Controller
 {
 
 
+    public function index()
+    {
+        return view('user.home');
+    }
+
+
     public function redirect()
     {
         if(Auth::id()) {
@@ -26,4 +32,7 @@ class HomeController extends Controller
             return redirect()->back();
         }
     }
+
+
+
 }
