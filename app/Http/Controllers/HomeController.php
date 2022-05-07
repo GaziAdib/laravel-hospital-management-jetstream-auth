@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Doctor;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Models\User;
@@ -9,13 +10,15 @@ use App\Models\User;
 class HomeController extends Controller
 {
 
-
+    // FrontEnd Index Users Page
     public function index()
     {
-        return view('user.home');
+        $doctors = Doctor::latest()->get();
+        return view('user.home', compact('doctors'));
     }
 
 
+    // Redirect Based on User And Admin
     public function redirect()
     {
         if(Auth::id()) {

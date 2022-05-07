@@ -28,6 +28,7 @@ Route::middleware([
 
 // All Routes For Admin
 Route::get('/admin-add-doctor', [AdminController::class, 'create'])->name('add.doctors');
+Route::post('/admin-add-doctor', [AdminController::class, 'store'])->name('store.doctors');
 
 
 

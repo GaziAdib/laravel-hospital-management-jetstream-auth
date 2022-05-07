@@ -1,4 +1,72 @@
-<!DOCTYPE html>
+@extends('admin.home')
+
+@section('content')
+<style>
+    label{
+        display: inline-block;
+        width: 200px;
+    }
+</style>
+
+    <div class="container justify-content-center mt-5 mb-5 pt-10">
+        @if (session()->has('message'))
+            <div class="alert alert-success">
+                <button type="button" class="close" data-dismiss="alert">x</button>
+                {{ session()->get('message') }}
+            </div>
+        @endif
+
+        <form action="{{ route('store.doctors') }}" method="POST" enctype="multipart/form-data">
+            @csrf
+            <div class="pt-2 pb-2 mt-2">
+                <label for="name">Doctor Name</label>
+                <input type="text" style="color:black" name="name" placeholder="Enter Name" required>
+            </div>
+
+
+            <div class="pt-2 pb-2 mt-2">
+                <label for="phone">Phone</label>
+                <input type="number" style="color:black" name="phone" placeholder="Enter Phone" required>
+            </div>
+
+
+            <div class="pt-2 pb-2 mt-2">
+                <label for="speciality">Doctor Speciality</label>
+
+                <select style="color: black; width:200px;" name="speciality">
+                    <option>---Select---</option>
+                    <option value="skin">Skin</option>
+                    <option value="heart">Heart</option>
+                    <option value="eye">Eye</option>
+                    <option value="skin">Skin</option>
+                </select>
+            </div>
+
+
+            <div class="pt-2 pb-2 mt-2">
+                <label for="room">Room</label>
+                <input type="text" style="color:black" name="room" placeholder="Enter Room Number" required>
+            </div>
+
+            <div class="pt-2 pb-2 mt-2">
+                <label for="image">Doctor Image</label>
+                <input type="file" name="image">
+            </div>
+
+            <div class="pt-2 pb-2 mt-2">
+                <input type="submit" class="btn btn-success">
+            </div>
+
+         </form>
+    </div>
+
+
+@endsection
+
+
+
+
+{{-- <!DOCTYPE html>
 <html lang="en">
   <head>
       <style>
@@ -27,54 +95,7 @@
 
         <!--main panel starts -->
 
-        <div class="container-fluid page-body-wrapper">
 
-            <div class="container justify-content-center mt-5 mb-5 pt-10">
-                <form action="" method="POST">
-                    <div class="pt-2 pb-2 mt-2">
-                        <label for="name">Doctor Name</label>
-                        <input type="text" style="color:black" name="name" placeholder="Enter Name" required>
-                    </div>
-
-
-                    <div class="pt-2 pb-2 mt-2">
-                        <label for="phone">Phone</label>
-                        <input type="number" style="color:black" name="phone" placeholder="Enter Phone" required>
-                    </div>
-
-
-                    <div class="pt-2 pb-2 mt-2">
-                        <label for="speciality">Doctor Speciality</label>
-
-                        <select style="color: black; width:200px;" name="speciality">
-                            <option>---Select---</option>
-                            <option value="skin">Skin</option>
-                            <option value="heart">Heart</option>
-                            <option value="eye">Eye</option>
-                            <option value="skin">Skin</option>
-                        </select>
-                    </div>
-
-
-                    <div class="pt-2 pb-2 mt-2">
-                        <label for="room">Room</label>
-                        <input type="text" style="color:black" name="room" placeholder="Enter Room Number" required>
-                    </div>
-
-                    <div class="pt-2 pb-2 mt-2">
-                        <label for="image">Doctor Image</label>
-                        <input type="file" name="image">
-                    </div>
-
-                    <div class="pt-2 pb-2 mt-2">
-                        <input type="submit" class="btn btn-success">
-                    </div>
-
-                 </form>
-            </div>
-
-
-        </div>
 
 
         <!-- main-panel ends -->
@@ -98,7 +119,7 @@
 
 
 
-
+ --}}
 
 
 

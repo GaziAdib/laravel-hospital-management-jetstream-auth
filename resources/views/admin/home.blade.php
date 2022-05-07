@@ -21,7 +21,10 @@
 
         <!--main panel starts -->
 
-        @include('admin.body')
+        <div class="container-fluid page-body-wrapper">
+            @yield('content')
+        </div>
+
 
         <!-- main-panel ends -->
       </div>
