@@ -24,7 +24,8 @@ class HomeController extends Controller
         if(Auth::id()) {
 
             if(Auth::user()->user_type=='0') {
-                return view('user.home');
+                $doctors = Doctor::latest()->get();
+                return view('user.home', compact('doctors'));
             }
             else {
                 return view('admin.home');
