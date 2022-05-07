@@ -1,7 +1,14 @@
 <?php
 
+use App\Http\Controllers\Admin\AdminController;
 use App\Http\Controllers\HomeController;
 use Illuminate\Support\Facades\Route;
+
+
+
+
+
+
 
 
 Route::get('/', [HomeController::class, 'index'])->name('index');
@@ -17,3 +24,12 @@ Route::middleware([
         return view('dashboard');
     })->name('dashboard');
 });
+
+
+// All Routes For Admin
+Route::get('/admin-add-doctor', [AdminController::class, 'create'])->name('add.doctors');
+
+
+
+
+

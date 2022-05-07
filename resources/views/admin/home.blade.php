@@ -1,5 +1,37 @@
-<x-app-layout>
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    @include('admin.css')
+  </head>
+  <body>
+    <div class="container-scroller">
 
-    <h1> This is Admin Dashboard </h1>
+      <!-- partial:partials/_sidebar.html -->
 
-</x-app-layout>
+      @include('admin.sidebar')
+
+      <!-- partial -->
+
+      <div class="container-fluid page-body-wrapper">
+        <!-- partial:partials/_navbar.html -->
+
+        @include('admin.navbar')
+
+        <!-- partial -->
+
+        <!--main panel starts -->
+
+        @include('admin.body')
+
+        <!-- main-panel ends -->
+      </div>
+
+      <!-- page-body-wrapper ends -->
+    </div>
+
+    @include('admin.script')
+
+  </body>
+</html>
+
+
