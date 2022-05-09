@@ -30,6 +30,9 @@ Route::middleware([
 Route::get('/admin-add-doctor', [AdminController::class, 'create'])->name('add.doctors');
 Route::post('/admin-add-doctor', [AdminController::class, 'store'])->name('store.doctors');
 
+// All Route for User To Appoint
+Route::post('/appointment', [HomeController::class, 'appointment'])->name('appointment.store');
+
 
 
 
