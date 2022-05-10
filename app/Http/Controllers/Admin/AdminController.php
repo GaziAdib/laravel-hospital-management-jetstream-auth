@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Models\Appointment;
 use App\Models\Doctor;
 use Illuminate\Http\Request;
 use Intervention\Image\Facades\Image;
@@ -42,6 +43,32 @@ class AdminController extends Controller
         ]);
 
         return redirect()->back()->with('message', 'Doctor Added Successfully');
+    }
+
+    // show all apointments in Admin Panel
+
+    public function showAppointment()
+    {
+        $appointments = Appointment::latest()->get();
+        return view('admin.appointments.show_appointments', compact('appointments'));
+    }
+
+    public function approveAppointment($id)
+    {
+        $data = Appointment::find($id);
+        $data->status = 'approved';
+        $data->save();
+
+        return redirect()->back()->with('message', 'Appointment Approved Successfully');
+    }
+
+    public function cancelAppointment($id)
+    {
+        $data = Appointment::find($id);
+        $data->status = 'cancelled';
+        $data->save();
+
+        return redirect()->back()->with('message', 'Appointment Cancelled Successfully');
     }
 
 
