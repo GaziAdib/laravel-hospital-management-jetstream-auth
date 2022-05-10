@@ -26,14 +26,19 @@ Route::middleware([
 });
 
 
+
+
 // All Routes For Admin
 Route::get('/admin-add-doctor', [AdminController::class, 'create'])->name('add.doctors');
 Route::post('/admin-add-doctor', [AdminController::class, 'store'])->name('store.doctors');
 
-// All Route for User To Appoint
+// POST User To Appointment
 Route::post('/appointment', [HomeController::class, 'appointment'])->name('appointment.store');
 
+// show all Appointment Current User Have
+Route::get('/myappointment', [HomeController::class, 'myappointment'])->name('myappointment.index');
 
 
-
+// Delete Appointment Current User
+Route::get('/cancel_appoint/{id}', [HomeController::class, 'cancelMyAppointment'])->name('appointment.cancel');
 

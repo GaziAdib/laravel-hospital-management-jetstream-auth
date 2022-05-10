@@ -96,4 +96,31 @@ class HomeController extends Controller
     }
 
 
+    //show all Auth Users appointments of current user
+    public function myappointment()
+    {
+        if(Auth::id())
+        {
+            $userId = Auth::id();
+            $appointments = Appointment::where('user_id', $userId)->select(['id','name', 'email', 'phone', 'doctor', 'message', 'date', 'status'])->get();
+            return view('user.my_appointment', compact('appointments'));
+        } else {
+            return redirect()->back();
+        }
+
+    }
+
+
+    // cancel Current User Appointment on button click on real time using ajax
+
+    public function cancelMyAppointment($id)
+    {
+       $data = Appointment::find($id);
+       $data->delete();
+       return redirect()->back();
+    }
+
+
+
+
 }
