@@ -32,6 +32,15 @@ Route::get('/admin-add-doctor', [AdminController::class, 'create'])->name('add.d
 Route::post('/admin-add-doctor', [AdminController::class, 'store'])->name('store.doctors');
 Route::get('/approve-appointment/{id}', [AdminController::class, 'approveAppointment'])->name('appoint.approve');
 Route::get('/cancel-appointment/{id}', [AdminController::class, 'cancelAppointment'])->name('appoint.cancel');
+Route::get('/show-doctors', [AdminController::class, 'showDoctors'])->name('show.doctors');
+Route::get('/delete-doctor/{id}', [AdminController::class, 'deleteDoctor'])->name('doctor.delete');
+Route::get('/edit-doctor/{id}', [AdminController::class, 'editDoctor'])->name('doctor.edit');
+Route::post('/update-doctor/{id}', [AdminController::class, 'updateDoctor'])->name('doctor.update');
+
+/////
+
+
+
 
 
 

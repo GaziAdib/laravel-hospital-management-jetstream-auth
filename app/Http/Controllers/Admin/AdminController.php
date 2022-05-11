@@ -53,6 +53,7 @@ class AdminController extends Controller
         return view('admin.appointments.show_appointments', compact('appointments'));
     }
 
+    // Approve Appointments
     public function approveAppointment($id)
     {
         $data = Appointment::find($id);
@@ -62,6 +63,7 @@ class AdminController extends Controller
         return redirect()->back()->with('message', 'Appointment Approved Successfully');
     }
 
+    // Cancel Appointments
     public function cancelAppointment($id)
     {
         $data = Appointment::find($id);
@@ -71,5 +73,64 @@ class AdminController extends Controller
         return redirect()->back()->with('message', 'Appointment Cancelled Successfully');
     }
 
+    // Show All doctors in Admin Section
+
+    public function showDoctors()
+    {
+        $doctors = Doctor::latest()->get();
+        return view('admin.doctors.show_doctors', compact('doctors'));
+    }
+
+
+    //Delete Doctor
+
+    public function deleteDoctor($id)
+    {
+        $doctor = Doctor::find($id);
+        $doctor->delete();
+
+        return redirect()->back()->with('message', 'Doctor Deleted Successfully');
+    }
+
+    // Edit Doctor
+
+    public function editDoctor($id)
+    {
+        $doctor = Doctor::find($id);
+        return view('admin.doctors.edit_doctor', compact('doctor'));
+    }
+
+
+    // Update Doctor
+
+    public function updateDoctor(Request $request, $id)
+    {
+
+
+        if($request->image) {
+            $image = $request->image;
+            $imgName = time().'.'.$image->getClientOriginalExtension();
+            Image::make($image)->resize(400, 500)->save(public_path('doctor_images/'.$imgName));
+
+            Doctor::find($id)->update([
+                'name' => $request->name,
+                'phone' => $request->phone,
+                'speciality' => $request->speciality,
+                'room' => $request->room,
+                'image' => 'doctor_images/'.$imgName
+            ]);
+            return redirect()->back()->with('message', 'Doctor Updated Successfully');
+        } else {
+            Doctor::find($id)->update([
+                'name' => $request->name,
+                'phone' => $request->phone,
+                'speciality' => $request->speciality,
+                'room' => $request->room
+            ]);
+            return redirect()->back()->with('message', 'Doctor Updated Successfully');
+        }
+
+
+    }
 
 }
