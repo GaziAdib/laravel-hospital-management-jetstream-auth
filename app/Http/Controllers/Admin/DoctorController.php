@@ -3,21 +3,22 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
-use App\Models\Appointment;
 use App\Models\Doctor;
-use Illuminate\Http\Request;
 use Intervention\Image\Facades\Image;
+use Illuminate\Http\Request;
 
-
-
-class AdminController extends Controller
+class DoctorController extends Controller
 {
 
+
+    // Add Doctor Form
     public function create()
     {
         return view('admin.doctors.add_doctors');
     }
 
+
+    // Add Doctor from Admin
     public function store(Request $request)
     {
         $request->validate([
@@ -27,12 +28,9 @@ class AdminController extends Controller
             'room' => 'required'
         ]);
 
-        //$image = $manager->make('public/foo.jpg')->resize(300, 200);
         $image = $request->image;
         $imgName = time().'.'.$image->getClientOriginalExtension();
         Image::make($image)->resize(400, 500)->save(public_path('doctor_images/'.$imgName));
-        //$image->move(public_path('doctor_images', $imgName));
-
 
         Doctor::create([
             'name' => $request->name,
@@ -45,44 +43,17 @@ class AdminController extends Controller
         return redirect()->back()->with('message', 'Doctor Added Successfully');
     }
 
-    // show all apointments in Admin Panel
 
-    public function showAppointment()
-    {
-        $appointments = Appointment::latest()->get();
-        return view('admin.appointments.show_appointments', compact('appointments'));
-    }
+     // Show All doctors in Admin Section
 
-    // Approve Appointments
-    public function approveAppointment($id)
-    {
-        $data = Appointment::find($id);
-        $data->status = 'approved';
-        $data->save();
-
-        return redirect()->back()->with('message', 'Appointment Approved Successfully');
-    }
-
-    // Cancel Appointments
-    public function cancelAppointment($id)
-    {
-        $data = Appointment::find($id);
-        $data->status = 'cancelled';
-        $data->save();
-
-        return redirect()->back()->with('message', 'Appointment Cancelled Successfully');
-    }
-
-    // Show All doctors in Admin Section
-
-    public function showDoctors()
-    {
-        $doctors = Doctor::latest()->get();
-        return view('admin.doctors.show_doctors', compact('doctors'));
-    }
+     public function showDoctors()
+     {
+         $doctors = Doctor::latest()->get();
+         return view('admin.doctors.show_doctors', compact('doctors'));
+     }
 
 
-    //Delete Doctor
+     // Delete Doctor
 
     public function deleteDoctor($id)
     {
@@ -105,7 +76,6 @@ class AdminController extends Controller
 
     public function updateDoctor(Request $request, $id)
     {
-
 
         if($request->image) {
             $image = $request->image;
@@ -132,5 +102,43 @@ class AdminController extends Controller
 
 
     }
+
+
+    // ----- Search Doctor Live-----
+
+    public function searchDoctor(Request $request)
+    {
+
+       $html = '';
+       $searchedDoctors =  Doctor::where('name', 'LIKE', '%'.$request->search.'%')
+                ->orWhere('phone', 'LIKE', '%'.$request->search.'%')
+                ->orWhere('speciality', 'LIKE', '%'.$request->search.'%')
+                ->orWhere('room', 'LIKE', '%'.$request->search.'%')
+                ->get();
+
+        if($searchedDoctors) {
+            foreach($searchedDoctors as $doctor) {
+                $html .= '<tr>
+                    <td>'.$doctor->id.'</td>
+                    <td>'.$doctor->name.'</td>
+                    <td>'.$doctor->phone.'</td>
+                    <td>'.$doctor->speciality.'</td>
+                    <td>'.$doctor->room.'</td>
+                    <td>
+                        <img src="'.asset($doctor->image).'" height="200px;" width="200px;" alt="">
+                    </td>
+                    <td>
+                        <a class="btn btn-success" href="'.route('doctor.edit', $doctor->id).'">Edit</a>
+                    </td>
+                    <td>
+                        <a class="btn btn-danger" href="'.route('doctor.delete', $doctor->id).'">Delete</a>
+                    </td>
+                </tr>';
+            }
+            return response()->json($html);
+        }
+
+    }
+
 
 }

@@ -12,6 +12,13 @@
             </div>
         @endif
 
+        <div class="mt-2 mb-2 pd-3">
+            <div class="input-group mt-2 mb-2 pd-2">
+                <input type="search" id="search" name="search" class="form-control rounded" placeholder="Search" style="color: white;" />
+                <button type="button" class="btn btn-outline-primary">search</button>
+            </div>
+        </div>
+
         <table class="table table-dark" style="color: rgb(142, 217, 255);">
             <thead>
               <tr style="background-color: skyblue">
@@ -26,7 +33,7 @@
 
               </tr>
             </thead>
-            <tbody id="table-body">
+            <tbody id="table-body" class="mainbody">
               @foreach ($doctors as $doctor)
                 <tr>
                     <td>{{ $doctor->id }}</td>
@@ -49,10 +56,39 @@
             </tbody>
           </table>
 
-
-
-
     </div>
+
+
+    {{-- Live Search Features Added With Ajax --}}
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+
+
+
+<script type="text/javascript">
+    $.ajaxSetup({ headers: { 'csrftoken' : '{{ csrf_token() }}' } });
+</script>
+
+
+<script>
+
+    $(document).ready(function () {
+        $('#search').on('keyup', function(){
+            var value = $(this).val();
+            $.ajax({
+                type: "get",
+                url: "/search-doctor",
+                data: {'search':value},
+                success: function (data) {
+                    $('.mainbody').html(data);
+                }
+            });
+
+        });
+    });
+
+</script>
+
 
 
 @endsection

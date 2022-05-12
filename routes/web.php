@@ -1,6 +1,8 @@
 <?php
 
 use App\Http\Controllers\Admin\AdminController;
+use App\Http\Controllers\Admin\AppointmentController;
+use App\Http\Controllers\Admin\DoctorController;
 use App\Http\Controllers\HomeController;
 use Illuminate\Support\Facades\Route;
 
@@ -27,17 +29,20 @@ Route::middleware([
 
 // All Routes For Admin
 
-Route::get('/show-appointments', [AdminController::class, 'showAppointment'])->name('show.appointment');
-Route::get('/admin-add-doctor', [AdminController::class, 'create'])->name('add.doctors');
-Route::post('/admin-add-doctor', [AdminController::class, 'store'])->name('store.doctors');
-Route::get('/approve-appointment/{id}', [AdminController::class, 'approveAppointment'])->name('appoint.approve');
-Route::get('/cancel-appointment/{id}', [AdminController::class, 'cancelAppointment'])->name('appoint.cancel');
-Route::get('/show-doctors', [AdminController::class, 'showDoctors'])->name('show.doctors');
-Route::get('/delete-doctor/{id}', [AdminController::class, 'deleteDoctor'])->name('doctor.delete');
-Route::get('/edit-doctor/{id}', [AdminController::class, 'editDoctor'])->name('doctor.edit');
-Route::post('/update-doctor/{id}', [AdminController::class, 'updateDoctor'])->name('doctor.update');
+Route::get('/show-appointments', [AppointmentController::class, 'showAppointment'])->name('show.appointment');
+Route::get('/admin-add-doctor', [DoctorController::class, 'create'])->name('add.doctors');
+Route::post('/admin-add-doctor', [DoctorController::class, 'store'])->name('store.doctors');
+Route::get('/approve-appointment/{id}', [AppointmentController::class, 'approveAppointment'])->name('appoint.approve');
+Route::get('/cancel-appointment/{id}', [AppointmentController::class, 'cancelAppointment'])->name('appoint.cancel');
+Route::get('/show-doctors', [DoctorController::class, 'showDoctors'])->name('show.doctors');
+Route::get('/delete-doctor/{id}', [DoctorController::class, 'deleteDoctor'])->name('doctor.delete');
+Route::get('/edit-doctor/{id}', [DoctorController::class, 'editDoctor'])->name('doctor.edit');
+Route::post('/update-doctor/{id}', [DoctorController::class, 'updateDoctor'])->name('doctor.update');
 
-/////
+// Search Doctor From Admin
+Route::get('/search-doctor', [DoctorController::class, 'searchDoctor'])->name('doctor.search');
+Route::get('/search-appointment', [AppointmentController::class, 'searchAppointment'])->name('appointment.search');
+
 
 
 
