@@ -79,9 +79,12 @@ class AppointmentController extends Controller
                      <td>'.$appoint->status.'</td>
                      <td>
                          <a class="btn btn-success" href="'.route('appoint.approve', $appoint->id).'">Approved</a>
-                       </td>
+                    </td>
                        <td>
                          <a class="btn btn-danger" href="'.route('appoint.cancel', $appoint->id).'">Canceled</a>
+                     </td>
+                     <td>
+                        <a class="btn btn-primary" href="'.route('email.view', $appoint->id).'">Send Mail</a>
                      </td>
                  </tr>';
              }
