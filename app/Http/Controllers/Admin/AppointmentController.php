@@ -3,7 +3,9 @@
 namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Models\Appointment;
+use App\Notifications\SendEmailNotification;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Notification;
 
 class AppointmentController extends Controller
 {
@@ -79,7 +81,27 @@ class AppointmentController extends Controller
 
      public function emailView($id)
      {
-        return view('admin.email.email_view');
+        $data  = Appointment::find($id);
+        return view('admin.email.email_view', compact('data'));
+     }
+
+
+     // send Actual email
+
+     public function emailSend(Request $request, $id)
+     {
+        $data = Appointment::find($id);
+        $details=[
+            'greeting' => $request->greeting,
+            'body' => $request->body,
+            'actiontext' => $request->actiontext,
+            'actionurl' => $request->actionurl,
+            'endpart' => $request->endpart
+        ];
+
+        Notification::send($data, new SendEmailNotification($details));
+
+        return redirect()->back();
      }
 
 }

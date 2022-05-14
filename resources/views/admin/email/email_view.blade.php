@@ -16,7 +16,7 @@
             </div>
         @endif
 
-        <form action="{{ route('store.doctors') }}" method="POST">
+        <form action="{{ route('email.send', $data->id) }}" method="POST">
             @csrf
             <div class="pt-2 pb-2 mt-2">
                 <label for="greeting">Greeting</label>
