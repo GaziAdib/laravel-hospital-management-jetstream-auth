@@ -5,6 +5,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Appointment;
 use App\Notifications\SendEmailNotification;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Notification;
 
 class AppointmentController extends Controller
@@ -13,8 +14,21 @@ class AppointmentController extends Controller
 
      public function showAppointment()
      {
-         $appointments = Appointment::latest()->get();
-         return view('admin.appointments.show_appointments', compact('appointments'));
+
+        if(Auth::id()) {
+            if(Auth::user()->user_type==1) {
+                $appointments = Appointment::latest()->get();
+                return view('admin.appointments.show_appointments', compact('appointments'));
+             } else {
+                 return redirect()->back();
+             }
+            } else {
+                return redirect('login');
+            }
+
+
+
+
      }
 
      // Approve Appointments
@@ -101,7 +115,7 @@ class AppointmentController extends Controller
 
         Notification::send($data, new SendEmailNotification($details));
 
-        return redirect()->back();
+        return redirect()->back()->with('message', 'Email Sent Successful!');
      }
 
 }

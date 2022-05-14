@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Doctor;
 use Intervention\Image\Facades\Image;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class DoctorController extends Controller
 {
@@ -14,7 +15,17 @@ class DoctorController extends Controller
     // Add Doctor Form
     public function create()
     {
-        return view('admin.doctors.add_doctors');
+        if(Auth::id()) {
+            if(Auth::user()->user_type==1) {
+                return view('admin.doctors.add_doctors');
+            }
+            else {
+                return redirect()->back();
+            }
+        } else {
+            return redirect('login');
+        }
+
     }
 
 
