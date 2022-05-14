@@ -37,6 +37,7 @@
                   <th style="color: white; font-size: 18px;">-Status-</th>
                   <th style="color: white; font-size: 18px;">Approved</th>
                   <th style="color: white; font-size: 18px;">Cancelled</th>
+                  <th style="color: white; font-size: 18px;">Send Mail</th>
                 </tr>
               </thead>
               <tbody id="table-body" class="mainbody">
@@ -55,7 +56,11 @@
                       </td>
                       <td>
                         <a class="btn btn-danger" href="{{ route('appoint.cancel', $appoint->id) }}">Canceled</a>
-                   </td>
+                     </td>
+
+                     <td>
+                        <a class="btn btn-primary" href="{{ route('email.view', $appoint->id) }}">Send Mail</a>
+                     </td>
                   </tr>
                 @endforeach
               </tbody>

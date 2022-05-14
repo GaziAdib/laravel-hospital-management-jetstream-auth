@@ -42,6 +42,10 @@ Route::post('/update-doctor/{id}', [DoctorController::class, 'updateDoctor'])->n
 Route::get('/search-doctor', [DoctorController::class, 'searchDoctor'])->name('doctor.search');
 Route::get('/search-appointment', [AppointmentController::class, 'searchAppointment'])->name('appointment.search');
 
+// email send
+Route::get('/email-view/{id}', [AppointmentController::class, 'emailView'])->name('email.view');
+
+
 
 
 

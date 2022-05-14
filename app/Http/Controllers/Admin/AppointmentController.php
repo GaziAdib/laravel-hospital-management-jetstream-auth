@@ -74,4 +74,12 @@ class AppointmentController extends Controller
 
      }
 
+
+     // Send mail to Users from Admin
+
+     public function emailView($id)
+     {
+        return view('admin.email.email_view');
+     }
+
 }
